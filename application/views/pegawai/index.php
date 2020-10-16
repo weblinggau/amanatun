@@ -7,7 +7,7 @@
               <!-- Illustrations -->
                 <div class="card shadow mb-4">
                   <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Data Izin</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Data Kepegawaian</h6>
                   </div>
                   <div class="card-body">
                     <?= $this->session->flashdata('message'); ?>
@@ -18,36 +18,36 @@
                         <tr>
                           <th>No</th>
                           <th>Nip Pegawai</th>
-                          <th>Tanggal</th>
-                          <th>Jenis</th>
-                          <th>Lama</th>
-                          <th>Keperluan</th>
-                          <th>Rentang Tanggal</th>
-                          <th>Keterangan</th>
-                          <th>Status</th>
+                          <th>Nama</th>
+                          <th>Sks Wajib</th>
+                          <th>Masa Kerja</th>
+                          <th>Nominal</th>
+                          <th>Gapok</th>
+                          <th>Tunjangan</th>
+                          <th>Transport</th>
                           <th>Aksi</th>
                         </tr>
                       </thead>
                       <tbody>
                        <?php 
                         $no = 1;
-                        foreach ($izin as $iz) {
+                        foreach ($pega as $pg) {
                          ?>
                         <tr>
                           <td><?= $no++; ?></td>
-                          <td><?= $iz->nip_pegawai; ?></td>
-                          <td><?= $iz->tgl_izin; ?></td>
-                          <td><?= $iz->jenis; ?></td>
-                          <td><?= $iz->lama; ?></td>
-                          <td><?= $iz->keperluan; ?></td>
-                          <td><?= $iz->rentang_tanggal; ?></td>
-                          <td><?= $iz->keterangan; ?></td>
-                          <td><?= $iz->status; ?></td>
+                          <td><?= $pg->nip_pegawai; ?></td>
+                          <td><?= $pg->nama; ?></td>
+                          <td><?= $pg->sks_wajib; ?></td>
+                          <td><?= $pg->masa_kerja; ?></td>
+                          <td><?= $pg->nominal; ?></td>
+                          <td><?= $pg->gapok; ?></td>
+                          <td><?= $pg->tunjangan; ?></td>
+                          <td><?= $pg->transport; ?></td>
                           <td>
-                              <a href="" data-toggle="modal" data-target="#editizin" data-id="<?= $iz->id_izin; ?>">
+                              <a href="" data-toggle="modal" data-target="#editpegawai" data-id="<?= $pg->id_kepegawaian; ?>">
                               <span class="badge badge-success">Edit</span>
                               </a>
-                              <a href="<?= base_url("izin/hapus/").$iz->id_izin.'/'.$iz->id_detail_izin;?>">
+                              <a href="<?= base_url("pegawai/hapus/").$pg->id_kepegawaian.'/'.$pg->id_jabatan;?>">
                               <span class="badge badge-danger">Hapus</span>
                               </a>
                           </td>
@@ -71,7 +71,7 @@
                   </div>
                   <div class="card-body">
                     <p>Untuk menambahkan klik tombol berikut</p>
-                    <a href="#" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#izin">
+                    <a href="#" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#pegawai">
                       <span class="icon text-white-50">
                           <i class="fas fa-arrow-right"></i>
                       </span>
@@ -86,48 +86,48 @@
         <!-- /.container-fluid -->
       </div>
       <!-- End of Main Content -->
-      <div class="modal fade" id="izin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal fade" id="pegawai" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Tambah Data Izin</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Tambah Data Kepegawaian</h5>
               <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span>
               </button>
             </div>
             <div class="modal-body">
-              <form class="user" method="post" action="<?= base_url("izin/add");?>">
+              <form class="user" method="post" action="<?= base_url("pegawai/add");?>">
                 <div class="form-group">
                   <label>Nip Pegawai</label>
                   <input type="text" class="form-control"  name="nip">
                 </div>
                 <div class="form-group">
-                  <label>Tanggal</label>
-                  <input type="date" class="form-control"  name="tgl">
+                  <label>Nama</label>
+                  <input type="text" class="form-control"  name="nama">
                 </div>
                 <div class="form-group">
-                  <label>Jenis</label>
-                  <input type="text" class="form-control"  name="jenis">
+                  <label>SKS Wajib</label>
+                  <input type="text" class="form-control"  name="sks">
                 </div>
                 <div class="form-group">
-                  <label>Lama</label>
-                  <input type="text" class="form-control"  name="lama">
+                  <label>Masa Kerja</label>
+                  <input type="text" class="form-control"  name="mas">
                 </div>
                 <div class="form-group">
-                  <label>Keperluan</label>
-                  <input type="text" class="form-control"  name="kep">
+                  <label>Nominal</label>
+                  <input type="text" class="form-control"  name="nom">
                 </div>
                 <div class="form-group">
-                  <label>Rentang Tanggal</label>
-                  <input type="text" class="form-control"  name="ren">
+                  <label>Gapok</label>
+                  <input type="number" class="form-control"  name="gapok">
                 </div>
                 <div class="form-group">
-                  <label>Keterangan</label>
-                  <input type="text" class="form-control"  name="ket">
+                  <label>Tunjangan</label>
+                  <input type="number" class="form-control"  name="tunjangan">
                 </div>
                 <div class="form-group">
-                  <label>Status</label>
-                  <input type="text" class="form-control"  name="status">
+                  <label>Transport</label>
+                  <input type="number" class="form-control"  name="trans">
                 </div>
             </div>
             <div class="modal-footer">
@@ -138,17 +138,17 @@
           </div>
         </div>
       </div>
-      <div class="modal fade" id="editizin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal fade" id="editpegawai" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Edit Data Izin</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Edit Data Kepegawaian</h5>
               <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span>
               </button>
             </div>
             <div class="modal-body">
-            <form class="prodi" method="post" action="<?= base_url("izin/update")?>">
+            <form class="prodi" method="post" action="<?= base_url("pegawai/update")?>">
               <div class="modal-data"></div>
             </div>
             <div class="modal-footer">
@@ -161,14 +161,14 @@
       </div>
   <script type="text/javascript">
     $(document).ready(function(){
-        $('#editizin').on('show.bs.modal', function (e) {
+        $('#editpegawai').on('show.bs.modal', function (e) {
             var userDat = $(e.relatedTarget).data('id');
             /* fungsi AJAX untuk melakukan fetch data */
             $.ajax({
                 type : 'post',
-                url : '<?= base_url("izin/praedit") ?>',
+                url : '<?= base_url("pegawai/praedit") ?>',
                 /* detail per identifier ditampung pada berkas detail.php yang berada di folder application/view */
-                data :  'izin='+ userDat,
+                data :  'pegawai='+ userDat,
                 /* memanggil fungsi getDetail dan mengirimkannya */
                 success : function(data){
                 $('.modal-data').html(data);

@@ -3,78 +3,64 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Auth extends CI_Controller 
 {
-	public function __construct()
-	{
-		parent::__construct();
-		$this->load->library('form_validation');
-	}
-
-	public function index()
-	{
-		// menyeting validasi username & password
-		$this->form_validation->set_rules('username', 'Username', 'trim|required');
-		$this->form_validation->set_rules('password', 'Password', 'trim|required');
-		if($this->form_validation->run() == false){
-			$data['title'] = 'Login Page';
-			$this->load->view('auth/login');
-		}else{
-			$this->_login();
-		}
-				// selesai
-	}
-
-	private function _login()
-	{
-		// mengambil data yang di pos
-		$username = $this->input->post('username');
-		$password = $this->input->post('password');
-		// selesai
-
-		// mengambil data dari table login
-		$login = $this->db->get_where('login', ['username'=> $username])->row_array();
-		// selesai
-
-		// membuat logika login jika berhasil di direct kemana jika gagal di direct kemana
-		if($login) {
-			if($password ==  $login['password']){
-				$data = [
-					'username' => $login['username'],
-					'role_id' => $login['role_id']
-				];
-				$this->session->set_userdata($data);
-				if($login['role_id']==1){
-					redirect('admin');	
-				}else{
-					redirect('user');
-				}
-								
-			}else{
-				$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
-                Password Salah</div>');
-                redirect('auth');
-			}
-
-		}
-
-		
-		else{
-			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
-            username tidak ada</div>');
-            redirect('auth');
-		}
-		// selesai
-	}
-
-	public function logout()
+    public function __construct()
     {
-    	// membuat logika logout dengan cara menghapus session
-        $this->session->unset_userdata('username');
-        $this->session->unset_userdata('role_id');
-        // selesai
-
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
-        Berhasil Logout</div>');
-        redirect('auth');
+        parent::__construct();
+        $this->load->library('form_validation');
     }
 
+    public function index()
+    {
+        if ($this->session->userdata('login') != 'zpmlogin') {
+            $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
+            $this->form_validation->set_rules('password', 'Password', 'trim|required');
+            if ($this->form_validation->run() == false){
+                $data['title'] = 'Login page';
+               $this->load->view('templates/auth_header', $data);
+               $this->load->view('auth/login');
+               $this->load->view('templates/auth_footer');
+            }else{
+                //validasinya success
+                $this->_login();
+            }
+        }else{
+            redirect('Panel');
+        }
+
 }
+
+private function _login()
+{
+    $email= $this->input->post('email');
+    $password= $this->input->post('password');
+    $user=$this->db->get_where('login', ['username' =>$email])->row_array();
+    if($user){
+            if(password_verify($password, $user['password'])){
+                $data=[
+                    'username'=>$user['username'],
+                    'role_id'=>$user['role_id'],
+                    'login' => 'zpmlogin'
+                ];
+                $this->session->set_userdata($data);
+                redirect('Panel');
+            }else{
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Wrong Password!</div>');
+                redirect('auth');
+            }
+    }else{
+        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Email is not registered!</div>');
+        redirect('auth');
+    }
+}
+public function logout()
+{
+    $this->session->unset_userdata('username');
+    $this->session->unset_userdata('role_id');
+    $this->session->unset_userdata('login');
+
+    $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">You have been Logged out! </div>');
+   redirect('auth');
+
+}
+ }
+
