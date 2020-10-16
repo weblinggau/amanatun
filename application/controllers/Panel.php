@@ -22,7 +22,7 @@ class Panel extends CI_Controller
     }
 
     public function pegawai(){
-        if ($this->session->userdata('login') != 'zpmlogin' && $this->session->userdata('role_id') == '1') {
+        if ($this->session->userdata('login') != 'zpmlogin' && $this->session->userdata('role_id') != '1') {
             redirect('Auth');
         }else{
             $data['pega']= $this->Panelmodel->getpegawai()->result();
@@ -34,7 +34,7 @@ class Panel extends CI_Controller
     }
 
     public function izin(){
-        if ($this->session->userdata('login') != 'zpmlogin' && $this->session->userdata('role_id') == '1') {
+        if ($this->session->userdata('login') != 'zpmlogin' && $this->session->userdata('role_id') != '1') {
             redirect('Auth');
         }else{
             $data['izin']= $this->Panelmodel->getizin()->result();
