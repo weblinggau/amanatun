@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Izin extends CI_Controller 
+class Abspeg extends CI_Controller 
 {
 	public function __construct(){
 		parent::__construct();
@@ -16,35 +16,32 @@ class Izin extends CI_Controller
     	}else{
       $nip = htmlspecialchars($this->input->post('nip', true));
   		$tgl = htmlspecialchars($this->input->post('tgl', true));
-  		$jenis= htmlspecialchars($this->input->post('jenis', true));
-  		$kep = htmlspecialchars($this->input->post('kep', true));
-  		$ren = htmlspecialchars($this->input->post('ren', true));
-      $lama = htmlspecialchars($this->input->post('lama', true));
+  		$hari= htmlspecialchars($this->input->post('hari', true));
+  		$jam = htmlspecialchars($this->input->post('jam', true));
   		$ket = htmlspecialchars($this->input->post('ket', true));
-  		$status = htmlspecialchars($this->input->post('status', true));
 
-  		$this->Panelmodel->addizin($nip,$tgl,$jenis,$kep,$ren,$lama,$ket,$status);
+  		$this->Panelmodel->addabspeg($nip,$tgl,$hari,$jam,$ket);
 
   		$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert">Data berhasil ditambhkan.!
     		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
       	<span aria-hidden="true">&times;</span>
     		</button>
   		</div>');
-  		redirect('Panel/izin');
+  		redirect('Panel/absenpegawai');
 		}
 		
 	}
-	public function hapus($idind,$idall){
+	public function hapus($idabs,$iddetail){
 		if ($this->session->userdata('login') != 'zpmlogin' && $this->session->userdata('role_id') != '1' && $this->session->userdata('role_id') != '3') {
     		redirect('Auth');
     	}else{
-			$this->Panelmodel->hapusizin($idind,$idall);
+			$this->Panelmodel->hapusabspeg($idabs,$iddetail);
 			$this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">Data berhasil dihapus.!
   		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
     	<span aria-hidden="true">&times;</span>
   		</button>
 		</div>');
-			redirect('Panel/izin');
+			redirect('Panel/absenpegawai');
 		}
 	}
 
@@ -52,42 +49,30 @@ class Izin extends CI_Controller
 		if ($this->session->userdata('login') != 'zpmlogin' && $this->session->userdata('role_id') != '1' && $this->session->userdata('role_id') != '3') {
     		redirect('Auth');
     	}else{
-    		$id = htmlspecialchars($this->input->post('izin', true));
-    		$izin = $this->Panelmodel->izinedit($id);
+    		$id = htmlspecialchars($this->input->post('abspeg', true));
+    		$absp = $this->Panelmodel->abspegedit($id);
 			
 	    		echo '<div class="form-group">
                   <label>Nip Pegawai</label>
-                  <input type="hidden" name="idind" value="'.$izin->id_izin.'">
-                  <input type="hidden" name="idall" value="'.$izin->id_detail_izin.'">
-                  <input type="text" class="form-control"  name="nip" value="'.$izin->nip_pegawai.'">
+                  <input type="hidden" name="idabs" value="'.$absp->id_absen_pegawai.'">
+                  <input type="hidden" name="iddetail" value="'.$absp->id_detail_absen_pegawai.'">
+                  <input type="text" class="form-control"  name="nip" value="'.$absp->nip_pegawai.'">
                 </div>
                 <div class="form-group">
                   <label>Tanggal</label>
-                  <input type="date" class="form-control"  name="tgl" value="'.$izin->tgl_izin.'">
+                  <input type="date" class="form-control"  name="tgl" value="'.$absp->tanggal.'">
                 </div>
                 <div class="form-group">
-                  <label>Jenis</label>
-                  <input type="text" class="form-control"  name="jenis" value="'.$izin->jenis.'">
+                  <label>Hari</label>
+                  <input type="text" class="form-control"  name="hari" value="'.$absp->hari.'">
                 </div>
                 <div class="form-group">
-                  <label>Lama</label>
-                  <input type="text" class="form-control"  name="lama" value="'.$izin->lama.'">
-                </div>
-                <div class="form-group">
-                  <label>Keperluan</label>
-                  <input type="text" class="form-control"  name="kep" value="'.$izin->keperluan.'">
-                </div>
-                <div class="form-group">
-                  <label>Rentang Tanggal</label>
-                  <input type="text" class="form-control"  name="ren" value="'.$izin->rentang_tanggal.'">
+                  <label>Jam</label>
+                  <input type="text" class="form-control"  name="jam" value="'.$absp->jam.'">
                 </div>
                 <div class="form-group">
                   <label>Keterangan</label>
-                  <input type="text" class="form-control"  name="ket" value="'.$izin->keterangan.'">
-                </div>
-                <div class="form-group">
-                  <label>Status</label>
-                  <input type="text" class="form-control"  name="status" value="'.$izin->status.'">
+                  <input type="text" class="form-control"  name="ket" value="'.$absp->keterangan.'">
                 </div>';
 
         }
@@ -98,24 +83,21 @@ class Izin extends CI_Controller
 		if ($this->session->userdata('login') != 'zpmlogin' && $this->session->userdata('role_id') != '1' && $this->session->userdata('role_id') != '3') {
     		redirect('Auth');
     	}else{
-    		$nip = htmlspecialchars($this->input->post('nip', true));
+    	$nip = htmlspecialchars($this->input->post('nip', true));
       $tgl = htmlspecialchars($this->input->post('tgl', true));
-      $jenis= htmlspecialchars($this->input->post('jenis', true));
-      $kep = htmlspecialchars($this->input->post('kep', true));
-      $ren = htmlspecialchars($this->input->post('ren', true));
-      $lama = htmlspecialchars($this->input->post('lama', true));
+      $hari= htmlspecialchars($this->input->post('hari', true));
+      $jam = htmlspecialchars($this->input->post('jam', true));
       $ket = htmlspecialchars($this->input->post('ket', true));
-      $status = htmlspecialchars($this->input->post('status', true));
-			$idind = htmlspecialchars($this->input->post('idind', true));
-			$idall = htmlspecialchars($this->input->post('idall', true));
-    		$this->Panelmodel->izinupdate($nip,$tgl,$jenis,$kep,$ren,$lama,$ket,$status,$idind,$idall);
+			$idabs = htmlspecialchars($this->input->post('idabs', true));
+			$iddetail = htmlspecialchars($this->input->post('iddetail', true));
+    	$this->Panelmodel->abspegupdate($nip,$tgl,$hari,$jam,$ket,$idabs,$iddetail);
 			$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert">Data berhasil diupdate
   		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
     	<span aria-hidden="true">&times;</span>
   		</button>
 		</div>');
 			
-		redirect('Panel/izin');
+		redirect('Panel/absenpegawai');
     	}
 	}
 

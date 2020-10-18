@@ -56,6 +56,7 @@
         </a>
       </li>
       
+      
       <li class="nav-item">
         <a class="nav-link collapsed" href="<?= base_url('panel/absendosen'); ?>" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-user-clock"></i>
@@ -74,12 +75,7 @@
           <span>Surat Peringatan</span>
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="<?= base_url('panel/jabatan'); ?>" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-user-clock"></i>
-          <span>Ruang Jabatan</span>
-        </a>
-      </li>
+     
       <li class="nav-item">
         <a class="nav-link collapsed" href="<?= base_url('panel/fungsional'); ?>" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-user-clock"></i>
@@ -159,12 +155,7 @@
           <span>Surat Peringatan</span>
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="<?= base_url('panel/jabatan'); ?>" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-user-clock"></i>
-          <span>Ruang Jabatan</span>
-        </a>
-      </li>
+      
       <li class="nav-item">
         <a class="nav-link collapsed" href="<?= base_url('panel/fungsional'); ?>" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-user-clock"></i>

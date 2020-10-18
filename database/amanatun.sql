@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Waktu pembuatan: 16 Okt 2020 pada 16.55
+-- Waktu pembuatan: 18 Okt 2020 pada 11.21
 -- Versi server: 8.0.18
 -- Versi PHP: 7.3.11
 
@@ -30,9 +30,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `absen_dosen` (
   `id_absen_dosen` int(20) NOT NULL,
-  `id_jadwal_kuliah` int(20) NOT NULL,
   `nip_pegawai` varchar(40) NOT NULL,
-  `tanggal` varchar(40) NOT NULL,
+  `tanggal` date NOT NULL,
   `hari` varchar(20) NOT NULL,
   `masuk` varchar(40) NOT NULL,
   `keterangan` varchar(30) NOT NULL
@@ -42,8 +41,8 @@ CREATE TABLE `absen_dosen` (
 -- Dumping data untuk tabel `absen_dosen`
 --
 
-INSERT INTO `absen_dosen` (`id_absen_dosen`, `id_jadwal_kuliah`, `nip_pegawai`, `tanggal`, `hari`, `masuk`, `keterangan`) VALUES
-(1, 1, '213123', '10', 'senin', '1', 'hadir');
+INSERT INTO `absen_dosen` (`id_absen_dosen`, `nip_pegawai`, `tanggal`, `hari`, `masuk`, `keterangan`) VALUES
+(2, '3434', '2020-10-18', 'minggu', 'masuk', 'Banget');
 
 -- --------------------------------------------------------
 
@@ -53,20 +52,19 @@ INSERT INTO `absen_dosen` (`id_absen_dosen`, `id_jadwal_kuliah`, `nip_pegawai`, 
 
 CREATE TABLE `absen_pegawai` (
   `id_absen_pegawai` int(20) NOT NULL,
-  `id_detail_absen_pegawai` int(20) NOT NULL,
+  `id_detail_absen_pegawai` varchar(20) NOT NULL,
   `nip_pegawai` varchar(40) NOT NULL,
-  `tanggal` varchar(20) NOT NULL,
-  `hari` varchar(40) NOT NULL,
-  `jam` varchar(30) NOT NULL,
-  `keterangan` varchar(40) NOT NULL
+  `tanggal` date NOT NULL,
+  `hari` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `absen_pegawai`
 --
 
-INSERT INTO `absen_pegawai` (`id_absen_pegawai`, `id_detail_absen_pegawai`, `nip_pegawai`, `tanggal`, `hari`, `jam`, `keterangan`) VALUES
-(1, 1, '121231', '10', 'senin', '10.00', 'hadir');
+INSERT INTO `absen_pegawai` (`id_absen_pegawai`, `id_detail_absen_pegawai`, `nip_pegawai`, `tanggal`, `hari`) VALUES
+(1, '1', '324234', '2020-10-18', 'minggu'),
+(2, '5f8bf0edb2a3b', '637832', '2020-10-18', 'minggu');
 
 -- --------------------------------------------------------
 
@@ -75,8 +73,7 @@ INSERT INTO `absen_pegawai` (`id_absen_pegawai`, `id_detail_absen_pegawai`, `nip
 --
 
 CREATE TABLE `detail_absen_pegawai` (
-  `id_detail_absen_pegawai` int(20) NOT NULL,
-  `id_absen_pegawai` int(20) NOT NULL,
+  `id_detail_absen_pegawai` varchar(20) NOT NULL,
   `jam` varchar(30) NOT NULL,
   `keterangan` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -85,8 +82,9 @@ CREATE TABLE `detail_absen_pegawai` (
 -- Dumping data untuk tabel `detail_absen_pegawai`
 --
 
-INSERT INTO `detail_absen_pegawai` (`id_detail_absen_pegawai`, `id_absen_pegawai`, `jam`, `keterangan`) VALUES
-(1, 1, '10.00', 'hadir');
+INSERT INTO `detail_absen_pegawai` (`id_detail_absen_pegawai`, `jam`, `keterangan`) VALUES
+('1', '10.00', 'hadir'),
+('5f8bf0edb2a3b', '08:00', 'hadir');
 
 -- --------------------------------------------------------
 
@@ -180,18 +178,11 @@ CREATE TABLE `jabatan_fungsional` (
   `id_jabatan_fungsional` int(20) NOT NULL,
   `jabatan` varchar(80) NOT NULL,
   `nomor_sk` varchar(40) NOT NULL,
-  `tgl_mulai` varchar(40) NOT NULL,
-  `tgl_berakhir` varchar(20) NOT NULL,
+  `tgl_mulai` date NOT NULL,
+  `tgl_berakhir` date NOT NULL,
   `status` varchar(40) NOT NULL,
   `nip_dosen` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data untuk tabel `jabatan_fungsional`
---
-
-INSERT INTO `jabatan_fungsional` (`id_jabatan_fungsional`, `jabatan`, `nomor_sk`, `tgl_mulai`, `tgl_berakhir`, `status`, `nip_dosen`) VALUES
-(1, 'Kaprodi', '312312', '10', '12', 'aktif', '12312312');
 
 -- --------------------------------------------------------
 
@@ -219,7 +210,7 @@ INSERT INTO `jabatan_pegawai` (`id_jabatan_pegawai`, `nip_pegawai`) VALUES
 --
 
 CREATE TABLE `jenis_surat_peringatan` (
-  `id_jenis_sp` int(20) NOT NULL,
+  `id_jenis_sp` varchar(20) NOT NULL,
   `nama` varchar(80) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -228,7 +219,9 @@ CREATE TABLE `jenis_surat_peringatan` (
 --
 
 INSERT INTO `jenis_surat_peringatan` (`id_jenis_sp`, `nama`) VALUES
-(1, 'Aku');
+('2', 'Aku'),
+('5f8c07434980c', 'ZPM'),
+('5f8c085f4768a', 'Aji Arian');
 
 -- --------------------------------------------------------
 
@@ -395,12 +388,11 @@ INSERT INTO `setting_gaji` (`id_setting_gaji`, `gapok`, `tunjangan`, `transport`
 
 CREATE TABLE `surat_peringatan` (
   `id_surat_peringatan` int(20) NOT NULL,
-  `id_jenis_sp` int(20) NOT NULL,
+  `id_jenis_sp` varchar(20) NOT NULL,
   `nip_pegawai` varchar(40) NOT NULL,
-  `nama` varchar(80) NOT NULL,
   `jenis_sp` varchar(100) NOT NULL,
   `perihal` varchar(40) NOT NULL,
-  `tanggal` varchar(100) NOT NULL,
+  `tanggal` date NOT NULL,
   `file` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -408,8 +400,10 @@ CREATE TABLE `surat_peringatan` (
 -- Dumping data untuk tabel `surat_peringatan`
 --
 
-INSERT INTO `surat_peringatan` (`id_surat_peringatan`, `id_jenis_sp`, `nip_pegawai`, `nama`, `jenis_sp`, `perihal`, `tanggal`, `file`) VALUES
-(1, 1, '1231231', 'Aku', 'sp1', 'coli', '10', '1');
+INSERT INTO `surat_peringatan` (`id_surat_peringatan`, `id_jenis_sp`, `nip_pegawai`, `jenis_sp`, `perihal`, `tanggal`, `file`) VALUES
+(2, '2', '23232', 'SP1', 'Penditng', '2020-10-18', 'nofiles.pdf'),
+(3, '5f8c07434980c', '3443', 'SP2', 'URGENT', '2020-10-18', '5f8c07434719e.pdf'),
+(5, '5f8c085f4768a', '3223', 'Sp1', 'urgent', '2020-10-18', '5f8c085f44eb3.pdf');
 
 -- --------------------------------------------------------
 
@@ -418,7 +412,7 @@ INSERT INTO `surat_peringatan` (`id_surat_peringatan`, `id_jenis_sp`, `nip_pegaw
 --
 
 CREATE TABLE `user_role` (
-  `id` int(20) NOT NULL,
+  `id_role` int(20) NOT NULL,
   `role` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -426,7 +420,7 @@ CREATE TABLE `user_role` (
 -- Dumping data untuk tabel `user_role`
 --
 
-INSERT INTO `user_role` (`id`, `role`) VALUES
+INSERT INTO `user_role` (`id_role`, `role`) VALUES
 (1, 'Admin'),
 (2, 'Pimpinan'),
 (3, 'Dosen'),
@@ -554,17 +548,35 @@ ALTER TABLE `surat_peringatan`
 -- Indeks untuk tabel `user_role`
 --
 ALTER TABLE `user_role`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id_role`);
 
 --
 -- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
+-- AUTO_INCREMENT untuk tabel `absen_dosen`
+--
+ALTER TABLE `absen_dosen`
+  MODIFY `id_absen_dosen` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT untuk tabel `absen_pegawai`
+--
+ALTER TABLE `absen_pegawai`
+  MODIFY `id_absen_pegawai` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT untuk tabel `izin`
 --
 ALTER TABLE `izin`
   MODIFY `id_izin` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT untuk tabel `jabatan_fungsional`
+--
+ALTER TABLE `jabatan_fungsional`
+  MODIFY `id_jabatan_fungsional` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `kepanitiaan`
@@ -582,13 +594,19 @@ ALTER TABLE `kepegawaian`
 -- AUTO_INCREMENT untuk tabel `login`
 --
 ALTER TABLE `login`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT untuk tabel `surat_peringatan`
+--
+ALTER TABLE `surat_peringatan`
+  MODIFY `id_surat_peringatan` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `user_role`
 --
 ALTER TABLE `user_role`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_role` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

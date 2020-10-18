@@ -11,7 +11,7 @@ class Pegawai extends CI_Controller
 
 
 	public function add(){
-		if ($this->session->userdata('login') != 'zpmlogin' && $this->session->userdata('role_id') != '1' ) {
+		if ($this->session->userdata('login') != 'zpmlogin' && $this->session->userdata('role_id') != '1' && $this->session->userdata('role_id') != '3') {
     		redirect('Auth');
     	}else{
 		$nip = htmlspecialchars($this->input->post('nip', true));
@@ -35,7 +35,7 @@ class Pegawai extends CI_Controller
 		
 	}
 	public function hapus($idind,$idall){
-		if ($this->session->userdata('login') != 'zpmlogin' && $this->session->userdata('role_id') != '1') {
+		if ($this->session->userdata('login') != 'zpmlogin' && $this->session->userdata('role_id') != '1' && $this->session->userdata('role_id') != '3') {
     		redirect('Auth');
     	}else{
 			$this->Panelmodel->hapuspegawai($idind,$idall);
@@ -49,7 +49,7 @@ class Pegawai extends CI_Controller
 	}
 
 	public function praedit(){
-		if ($this->session->userdata('login') != 'zpmlogin' && $this->session->userdata('role_id') != '1') {
+		if ($this->session->userdata('login') != 'zpmlogin' && $this->session->userdata('role_id') != '1' && $this->session->userdata('role_id') != '3') {
     		redirect('Auth');
     	}else{
     		$id = htmlspecialchars($this->input->post('pegawai', true));
@@ -95,7 +95,7 @@ class Pegawai extends CI_Controller
 	}
 
 	public function update(){
-		if ($this->session->userdata('login') != 'zpmlogin' && $this->session->userdata('role_id') != '1') {
+		if ($this->session->userdata('login') != 'zpmlogin' && $this->session->userdata('role_id') != '1' && $this->session->userdata('role_id') != '3') {
     		redirect('Auth');
     	}else{
     		$nip = htmlspecialchars($this->input->post('nip', true));

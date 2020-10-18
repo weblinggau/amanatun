@@ -25,5 +25,11 @@ password : 1234<br/><br/>
 -merapikan database yang duplikat<br/>
 -role back script sblumnya<br/>
 -update database<br/><br/>
+18-10-2020<br/>
+-Menu yg ter role back telah pulih dengan tampilan baru<br/>
+-Semua meu join databse telah selesai di normalisasi dan sudah aktif sepenuhnya<br/>
+-Fix role login<br/>
+-Update database<br/>
+-Penambahan menu laporan<br/>
 
 

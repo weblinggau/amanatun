@@ -290,5 +290,288 @@ class PanelModel extends CI_Model {
     }
     // batas akhir module menu panitia
 
+    // module absen pegawai
+
+    public function getabspeg(){
+        $this->db->select('*');
+        $this->db->from('absen_pegawai');
+        $this->db->join('detail_absen_pegawai', 'detail_absen_pegawai.id_detail_absen_pegawai = absen_pegawai.id_detail_absen_pegawai');
+        $data = $this->db->get();
+        return $data;
+    }
+
+    public function addabspeg($nip,$tgl,$hari,$jam,$ket){
+        $uniqid = uniqid();
+        $this->db->trans_start();
+            $detail = array(
+                'id_detail_absen_pegawai' => $uniqid, 
+                'jam' => $jam,
+                'keterangan' => $ket
+            );
+            $this->db->insert('detail_absen_pegawai', $detail);
+
+            $abs = array(
+                'id_detail_absen_pegawai' => $uniqid,
+                'nip_pegawai' => $nip,
+                'tanggal' => $tgl,
+                'hari' => $hari,
+            );
+            $this->db->insert('absen_pegawai', $abs);
+        $this->db->trans_complete();
+    }
+
+    public function abspegedit($id){
+        $this->db->select('*');
+        $this->db->from('absen_pegawai');
+        $this->db->join('detail_absen_pegawai', 'detail_absen_pegawai.id_detail_absen_pegawai = absen_pegawai.id_detail_absen_pegawai');
+        $this->db->where('id_absen_pegawai', $id); 
+        $result = $this->db->get()->row(); 
+        return $result;
+    }
+
+    public function abspegupdate($nip,$tgl,$hari,$jam,$ket,$idabs,$iddetail){
+        $this->db->trans_start();
+            $detail = array(
+                'jam' => $jam,
+                'keterangan' => $ket
+            );
+            $this->db->where('id_detail_absen_pegawai',$iddetail);
+            $this->db->update('detail_absen_pegawai',$detail);
+
+            $abs = array(
+                'nip_pegawai' => $nip,
+                'tanggal' => $tgl,
+                'hari' => $hari,
+            );
+            $this->db->where('id_absen_pegawai',$idabs);
+            $this->db->update('absen_pegawai',$abs);
+        $this->db->trans_complete();
+    }
+
+    public function hapusabspeg($idabs,$iddetail){
+        $this->db->trans_start();
+            $this->db->where('id_detail_absen_pegawai',$iddetail);
+            $this->db->delete('detail_absen_pegawai');
+
+            $this->db->where('id_absen_pegawai',$idabs);
+            $this->db->delete('absen_pegawai');
+        $this->db->trans_complete();
+    }
+
+    // batas akhir module absen pegawai
+
+    // module absen dosen
+    public function getabsdos(){
+        $data = $this->db->get('absen_dosen');
+        return $data;
+    }
+    
+    public function addabsdos($nip,$tgl,$hari,$mas,$ket){
+        $dos = array( 
+                'nip_pegawai' => $nip,
+                'tanggal' => $tgl,
+                'hari' => $hari,
+                'masuk' => $mas,
+                'keterangan' => $ket
+            );
+        $this->db->insert('absen_dosen', $dos);
+    }
+
+    public function absdosedit($id){
+        $this->db->where('id_absen_dosen', $id); 
+        $result = $this->db->get('absen_dosen')->row(); 
+        return $result;
+    }
+
+    public function hapusabsdos($id){
+        $this->db->where('id_absen_dosen',$id);
+        $this->db->delete('absen_dosen');
+       return;
+    }
+
+    public function absdosupdate($nip,$tgl,$hari,$mas,$ket,$id){
+        $abs = array(
+                'nip_pegawai' => $nip,
+                'tanggal' => $tgl,
+                'hari' => $hari,
+                'masuk' => $mas,
+                'keterangan' => $ket
+        );
+        $this->db->where('id_absen_dosen',$id);
+        $this->db->update('absen_dosen',$abs);
+    }
+    // batas akhir module absen dosen
+
+    // module menu surat peringatan
+    public function getperingatan(){
+        $this->db->select('*');
+        $this->db->from('surat_peringatan');
+        $this->db->join('jenis_surat_peringatan', 'jenis_surat_peringatan.id_jenis_sp = surat_peringatan.id_jenis_sp');
+        $data = $this->db->get();
+        return $data;
+    }
+
+    public function addperingatan($nip,$tgl,$nama,$sp,$ket,$file){
+        $uniqid = uniqid();
+        $this->db->trans_start();
+            $sps = array(
+                'id_jenis_sp' => $uniqid, 
+                'nama' => $nama
+            );
+            $this->db->insert('jenis_surat_peringatan', $sps);
+
+            $per = array(
+                'id_jenis_sp' => $uniqid,
+                'nip_pegawai' => $nip,
+                'tanggal' => $tgl,
+                'jenis_sp' => $sp,
+                'perihal' => $ket,
+                'file' => $file
+            );
+            $this->db->insert('surat_peringatan', $per);
+        $this->db->trans_complete();
+    }
+
+    public function peringatanedit($id){
+        $this->db->select('*');
+        $this->db->from('surat_peringatan');
+        $this->db->join('jenis_surat_peringatan', 'jenis_surat_peringatan.id_jenis_sp = surat_peringatan.id_jenis_sp');
+        $this->db->where('id_surat_peringatan', $id); 
+        $result = $this->db->get()->row(); 
+        return $result;
+    }
+
+    public function peringatanupdate($nip,$tgl,$nama,$sp,$ket,$idsurat,$idjenis,$file){
+        $this->db->trans_start();
+            $sps = array( 
+                'nama' => $nama
+            );
+            $this->db->where('id_jenis_sp',$idjenis);
+            $this->db->update('jenis_surat_peringatan',$sps);
+
+            $per = array(
+                'nip_pegawai' => $nip,
+                'tanggal' => $tgl,
+                'jenis_sp' => $sp,
+                'perihal' => $ket,
+                'file' => $file
+            );
+            $this->db->where('id_surat_peringatan',$idsurat);
+            $this->db->update('surat_peringatan',$per);
+        $this->db->trans_complete();
+    }
+
+    public function hapusperingatan($id1,$id2){
+        $this->db->trans_start();
+            $this->db->where('id_jenis_sp',$id2);
+            $this->db->delete('jenis_surat_peringatan');
+
+            $this->db->where('id_surat_peringatan',$id1);
+            $this->db->delete('surat_peringatan');
+        $this->db->trans_complete();
+    }
+
+
+    // batas akhir module surat peringatan
+
+
+    // module menu fungsional
+    public function getfungsi(){
+        $data = $this->db->get('jabatan_fungsional');
+        return $data;
+    }
+
+    public function addfungsi($nip,$tglstr,$tglend,$jabatan,$sk,$status){
+        $fs = array( 
+                'jabatan' => $jabatan,
+                'nomor_sk' => $sk,
+                'tgl_mulai' => $tglstr,
+                'tgl_berakhir' => $tglend,
+                'status' => $status,
+                'nip_dosen' => $nip
+            );
+        $this->db->insert('jabatan_fungsional', $fs);
+    }
+
+    public function fungsiedit($id){
+        $this->db->where('id_jabatan_fungsional', $id); 
+        $result = $this->db->get('jabatan_fungsional')->row(); 
+        return $result;
+    }
+
+    public function fungsiupdate($nip,$tglstr,$tglend,$jabatan,$sk,$status,$id){
+        $abs = array(
+                'jabatan' => $jabatan,
+                'nomor_sk' => $sk,
+                'tgl_mulai' => $tglstr,
+                'tgl_berakhir' => $tglend,
+                'status' => $status,
+                'nip_dosen' => $nip
+        );
+        $this->db->where('id_jabatan_fungsional',$id);
+        $this->db->update('jabatan_fungsional',$abs);
+    }
+
+    public function hapusfungsi($id){
+        $this->db->where('id_jabatan_fungsional',$id);
+        $this->db->delete('jabatan_fungsional');
+       return;
+    }
+    // batas akhir menu fungsional
+
+    // module untuk menu user
+    public function getusera(){
+        $this->db->select('*');
+        $this->db->from('login');
+        $this->db->join('user_role', 'user_role.id_role = login.role_id');
+        $data = $this->db->get();
+        return $data;
+    }
+
+    public function addusera($email,$role,$pass){
+        $user = array( 
+                'username' => $email,
+                'password' => $pass,
+                'role_id' => $role
+            );
+        $this->db->insert('login', $user);
+    }
+
+    public function useredit($id){
+        $this->db->select('*');
+        $this->db->from('login');
+        $this->db->join('user_role', 'user_role.id_role = login.role_id');
+        $this->db->where('id', $id); 
+        $result = $this->db->get()->row(); 
+        return $result;
+    }
+
+    public function userupdate($email,$role,$id){
+        $abs = array(
+                'username' => $email,
+                'role_id' => $role
+        );
+        $this->db->where('id',$id);
+        $this->db->update('login',$abs);
+    }
+
+    public function userupdatepass($email,$role,$pass,$id){
+        $abs = array(
+                'username' => $email,
+                'password' => $pass,
+                'role_i' => $role
+        );
+        $this->db->where('id',$id);
+        $this->db->update('login',$abs);
+    }
+
+    public function hapususer($id){
+        $this->db->where('id',$id);
+        $this->db->delete('login');
+       return;
+    }
+
+    // batas akhir menu user
+
 }
 ?>

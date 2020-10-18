@@ -58,6 +58,7 @@
                   </div>        
               </table>
             </div>
+            <!-- batas akhir -->
                   </div>
                 </div>
             </div>

@@ -7,7 +7,7 @@
               <!-- Illustrations -->
                 <div class="card shadow mb-4">
                   <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Data Kepanitiaan</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Data Jabatan Fungsional</h6>
                   </div>
                   <div class="card-body">
                     <?= $this->session->flashdata('message'); ?>
@@ -17,33 +17,33 @@
                       <thead>
                         <tr>
                           <th>No</th>
-                          <th>Nip Pegawai</th>
-                          <th>Nama</th>
-                          <th>Tanggal</th>
-                          <th>Lokasi</th>
-                          <th>Honor</th>
-                          <th>Keterangan</th>
+                          <th>Nip Dosen</th>
+                          <th>Jabatan</th>
+                          <th>Nomor SK</th>
+                          <th>Tgl Mulai</th>
+                          <th>Tgl Berakhir</th>
+                          <th>Status</th>
                           <th>Aksi</th>
                         </tr>
                       </thead>
                       <tbody>
                        <?php 
                         $no = 1;
-                        foreach ($panitia as $pan) {
+                        foreach ($fungsi as $f) {
                          ?>
                         <tr>
                           <td><?= $no++; ?></td>
-                          <td><?= $pan->nip_pegawai; ?></td>
-                          <td><?= $pan->nama; ?></td>
-                          <td><?= $pan->tanggal; ?></td>
-                          <td><?= $pan->lokasi; ?></td>
-                          <td><?= $pan->honor; ?></td>
-                          <td><?= $pan->keterangan; ?></td>
+                          <td><?= $f->nip_dosen; ?></td>
+                          <td><?= $f->jabatan; ?></td>
+                          <td><?= $f->nomor_sk; ?></td>
+                          <td><?= $f->tgl_mulai; ?></td>
+                          <td><?= $f->tgl_berakhir; ?></td>
+                          <td><?= $f->status; ?></td>
                           <td>
-                              <a href="" data-toggle="modal" data-target="#editpanitia" data-id="<?= $pan->id_kepanitiaan; ?>">
+                              <a href="" data-toggle="modal" data-target="#editfungsi" data-id="<?= $f->id_jabatan_fungsional; ?>">
                               <span class="badge badge-success">Edit</span>
                               </a>
-                              <a href="<?= base_url("panitia/hapus/").$pan->id_kepanitiaan.'/'.$pan->id_detail_kepanitiaan;?>">
+                              <a href="<?= base_url("fungsi/hapus/").$f->id_jabatan_fungsional;?>">
                               <span class="badge badge-danger">Hapus</span>
                               </a>
                           </td>
@@ -58,8 +58,6 @@
                 </div>
             </div>
 
-            <!-- batas akhir -->
-
             <div class="col-lg-4 mb-4">
 
               <!-- Illustrations -->
@@ -69,7 +67,7 @@
                   </div>
                   <div class="card-body">
                     <p>Untuk menambahkan klik tombol berikut</p>
-                    <a href="#" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#panitia">
+                    <a href="#" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#fungsi">
                       <span class="icon text-white-50">
                           <i class="fas fa-arrow-right"></i>
                       </span>
@@ -84,40 +82,40 @@
         <!-- /.container-fluid -->
       </div>
       <!-- End of Main Content -->
-      <div class="modal fade" id="panitia" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal fade" id="fungsi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Tambah Data Kepanitiaan</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Tambah Jabatan Fungsional</h5>
               <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span>
               </button>
             </div>
             <div class="modal-body">
-              <form class="user" method="post" action="<?= base_url("panitia/add");?>">
+              <form class="user" method="post" action="<?= base_url("fungsi/add");?>">
                 <div class="form-group">
-                  <label>Nip Pegawai</label>
+                  <label>Nip Dosen</label>
                   <input type="text" class="form-control"  name="nip">
                 </div>
                 <div class="form-group">
-                  <label>Nama</label>
-                  <input type="text" class="form-control"  name="nama">
+                  <label>Tanggal Mulai</label>
+                  <input type="date" class="form-control"  name="tglstr">
                 </div>
                 <div class="form-group">
-                  <label>Tanggal</label>
-                  <input type="date" class="form-control"  name="tgl">
+                  <label>Tanggal Berakhir</label>
+                  <input type="date" class="form-control"  name="tglend">
                 </div>
                 <div class="form-group">
-                  <label>Lokasi</label>
-                  <input type="text" class="form-control"  name="lokasi">
+                  <label>Jabatan</label>
+                  <input type="text" class="form-control"  name="jabatan">
                 </div>
                 <div class="form-group">
-                  <label>Honor</label>
-                  <input type="number" class="form-control"  name="honor">
+                  <label>Nomor Sk</label>
+                  <input type="text" class="form-control"  name="sk">
                 </div>
                 <div class="form-group">
-                  <label>Keterangan</label>
-                  <input type="text" class="form-control"  name="ket">
+                  <label>Status</label>
+                  <input type="text" class="form-control"  name="status">
                 </div>
             </div>
             <div class="modal-footer">
@@ -128,17 +126,17 @@
           </div>
         </div>
       </div>
-      <div class="modal fade" id="editpanitia" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal fade" id="editfungsi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Edit Data Kepanitiaan</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Edit Jabatan Fungsional</h5>
               <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span>
               </button>
             </div>
             <div class="modal-body">
-            <form class="prodi" method="post" action="<?= base_url("panitia/update")?>">
+            <form class="prodi" method="post" action="<?= base_url("fungsi/update")?>">
               <div class="modal-data"></div>
             </div>
             <div class="modal-footer">
@@ -151,14 +149,14 @@
       </div>
   <script type="text/javascript">
     $(document).ready(function(){
-        $('#editpanitia').on('show.bs.modal', function (e) {
+        $('#editfungsi').on('show.bs.modal', function (e) {
             var userDat = $(e.relatedTarget).data('id');
             /* fungsi AJAX untuk melakukan fetch data */
             $.ajax({
                 type : 'post',
-                url : '<?= base_url("panitia/praedit") ?>',
+                url : '<?= base_url("fungsi/praedit") ?>',
                 /* detail per identifier ditampung pada berkas detail.php yang berada di folder application/view */
-                data :  'panitia='+ userDat,
+                data :  'jbt='+ userDat,
                 /* memanggil fungsi getDetail dan mengirimkannya */
                 success : function(data){
                 $('.modal-data').html(data);
