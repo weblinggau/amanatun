@@ -119,7 +119,7 @@ class Panel extends CI_Controller
     }
 
     public function laporan(){
-        if ($this->session->userdata('login') != 'zpmlogin' && $this->session->userdata('role_id') != '1' && $this->session->userdata('role_id') != '2' && $this->session->userdata('role_id') != '3') {
+        if ($this->session->userdata('login') != 'zpmlogin' && $this->session->userdata('role_id') != '1' && $this->session->userdata('role_id') != '2') {
             redirect('Auth');
         }else{
             $data['fungsi']= $this->Panelmodel->getfungsi()->result();
