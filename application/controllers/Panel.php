@@ -13,9 +13,12 @@ class Panel extends CI_Controller
     	if ($this->session->userdata('login') != 'zpmlogin') {
     		redirect('Auth');
     	}else{
+            $data['pegawai'] = count($this->Panelmodel->getpegawai()->result());
+            $data['laki'] = count($this->Panelmodel->widged('laki')->result());
+            $data['perempuan'] = count($this->Panelmodel->widged('perempuan')->result());
     		$this->load->view('templates/panel_header');
 		    $this->load->view('templates/panel_menu');
-		    $this->load->view('public/home');
+		    $this->load->view('public/home', $data);
 		    $this->load->view('templates/panel_footer');
     	}
     	
@@ -39,6 +42,9 @@ class Panel extends CI_Controller
             redirect('Auth');
         }else{
             $data['pega']= $this->Panelmodel->getpegawai()->result();
+            $data['pegawai'] = count($this->Panelmodel->getpegawai()->result());
+            $data['laki'] = count($this->Panelmodel->widged('laki')->result());
+            $data['perempuan'] = count($this->Panelmodel->widged('perempuan')->result());
             $this->load->view('templates/panel_header');
             $this->load->view('templates/panel_menu');
             $this->load->view('pegawai/index',$data);
@@ -70,29 +76,29 @@ class Panel extends CI_Controller
         }
     }
 
-    public function absenpegawai(){
-        if ($this->session->userdata('login') != 'zpmlogin' && $this->session->userdata('role_id') != '1' && $this->session->userdata('role_id') != '3') {
-            redirect('Auth');
-        }else{
-            $data['abspeg']= $this->Panelmodel->getabspeg()->result();
-            $this->load->view('templates/panel_header');
-            $this->load->view('templates/panel_menu');
-            $this->load->view('abspegawai/index',$data);
-            $this->load->view('templates/panel_footer');
-        }
-    }
+    // public function absenpegawai(){
+    //     if ($this->session->userdata('login') != 'zpmlogin' && $this->session->userdata('role_id') != '1' && $this->session->userdata('role_id') != '3') {
+    //         redirect('Auth');
+    //     }else{
+    //         $data['abspeg']= $this->Panelmodel->getabspeg()->result();
+    //         $this->load->view('templates/panel_header');
+    //         $this->load->view('templates/panel_menu');
+    //         $this->load->view('abspegawai/index',$data);
+    //         $this->load->view('templates/panel_footer');
+    //     }
+    // }
 
-    public function absendosen(){
-        if ($this->session->userdata('login') != 'zpmlogin' && $this->session->userdata('role_id') != '1' && $this->session->userdata('role_id') != '4' && $this->session->userdata('role_id') != '3') {
-            redirect('Auth');
-        }else{
-            $data['absdos']= $this->Panelmodel->getabsdos()->result();
-            $this->load->view('templates/panel_header');
-            $this->load->view('templates/panel_menu');
-            $this->load->view('absdosen/index',$data);
-            $this->load->view('templates/panel_footer');
-        }
-    }
+    // public function absendosen(){
+    //     if ($this->session->userdata('login') != 'zpmlogin' && $this->session->userdata('role_id') != '1' && $this->session->userdata('role_id') != '4' && $this->session->userdata('role_id') != '3') {
+    //         redirect('Auth');
+    //     }else{
+    //         $data['absdos']= $this->Panelmodel->getabsdos()->result();
+    //         $this->load->view('templates/panel_header');
+    //         $this->load->view('templates/panel_menu');
+    //         $this->load->view('absdosen/index',$data);
+    //         $this->load->view('templates/panel_footer');
+    //     }
+    // }
 
     public function peringatan(){
         if ($this->session->userdata('login') != 'zpmlogin' && $this->session->userdata('role_id') != '1' && $this->session->userdata('role_id') != '3') {

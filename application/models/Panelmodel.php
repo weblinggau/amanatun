@@ -14,7 +14,22 @@ class PanelModel extends CI_Model {
         return $data;
     }
 
-    public function addpegawai($nip,$mas,$nama,$sks,$nom,$gapok,$tunjangan,$trans){
+    public function widged($rule){
+        if ($rule == 'laki') {
+            $this->db->select('*');
+            $this->db->from('kepegawaian');
+            $this->db->where('gender', 'laki-laki');
+            $data = $this->db->get();
+        }elseif ($rule == 'perempuan') {
+            $this->db->select('*');
+            $this->db->from('kepegawaian');
+            $this->db->where('gender', 'perempuan');
+            $data = $this->db->get();
+        }
+        return $data;
+    }
+
+    public function addpegawai($nip,$mas,$nama,$sks,$nom,$gapok,$tunjangan,$trans,$gender){
         $uniqid = uniqid();
         $this->db->trans_start();
             $data1 = array(
@@ -50,7 +65,9 @@ class PanelModel extends CI_Model {
             'id_jabatan' => $uniqid, 
             'id_masa_kerja' => $uniqid,
             'id_jenjang' => $uniqid,
-            'id_setting_gaji' => $uniqid);
+            'id_setting_gaji' => $uniqid,
+            'gender' => $gender
+            );
             $this->db->insert('kepegawaian', $res);
         $this->db->trans_complete();
     }
@@ -68,7 +85,7 @@ class PanelModel extends CI_Model {
         return $result;
     }
 
-    public function pegawaiupdate($nip,$mas,$nama,$sks,$nom,$gapok,$tunjangan,$trans,$idall){
+    public function pegawaiupdate($nip,$mas,$nama,$sks,$nom,$gapok,$tunjangan,$trans,$idall,$gender,$idpeg){
         $this->db->trans_start();
             $data1 = array(
                 'nip_pegawai' => $nip
@@ -102,6 +119,12 @@ class PanelModel extends CI_Model {
             );
             $this->db->where('id_setting_gaji',$idall);
             $this->db->update('setting_gaji',$data5);
+
+            $data6 = array(
+                'gender' => $gender
+            );
+            $this->db->where('id_kepegawaian',$idpeg);
+            $this->db->update('kepegawaian',$data6);
         $this->db->trans_complete();
     }
 

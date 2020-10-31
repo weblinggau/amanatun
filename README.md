@@ -30,6 +30,9 @@ password : 1234<br/><br/>
 -Semua meu join databse telah selesai di normalisasi dan sudah aktif sepenuhnya<br/>
 -Fix role login<br/>
 -Update database<br/>
--Penambahan menu laporan<br/>
+-Penambahan menu laporan<br/><br/>
+31/10/2020<br/>
+-pemanbahan grafik di dashboard dan menu kepegawaian <br/>
+-hapus semua menu absensi <br/>
 
 

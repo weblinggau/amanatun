@@ -57,7 +57,7 @@
       </li>
       
       
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="<?= base_url('panel/absendosen'); ?>" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-user-clock"></i>
           <span>Absen Dosen</span>
@@ -68,7 +68,7 @@
           <i class="fas fa-fw fa-user-clock"></i>
           <span>Absen Pegawai</span>
         </a>
-      </li>
+      </li> -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="<?= base_url('panel/peringatan'); ?>" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-user-clock"></i>
@@ -98,12 +98,12 @@
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
     </div>
     <?php }elseif ($this->session->userdata('role_id') == '4') {?>
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="<?= base_url('panel/absendosen'); ?>" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-user-clock"></i>
           <span>Absen Dosen</span>
         </a>
-      </li>
+      </li> -->
       <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
     </div>
@@ -137,7 +137,7 @@
         </a>
       </li>
       
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="<?= base_url('panel/absendosen'); ?>" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-user-clock"></i>
           <span>Absen Dosen</span>
@@ -148,7 +148,7 @@
           <i class="fas fa-fw fa-user-clock"></i>
           <span>Absen Pegawai</span>
         </a>
-      </li>
+      </li> -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="<?= base_url('panel/peringatan'); ?>" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-user-clock"></i>

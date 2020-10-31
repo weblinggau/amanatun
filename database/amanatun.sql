@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Waktu pembuatan: 18 Okt 2020 pada 11.21
+-- Waktu pembuatan: 31 Okt 2020 pada 07.07
 -- Versi server: 8.0.18
 -- Versi PHP: 7.3.11
 
@@ -166,7 +166,8 @@ CREATE TABLE `jabatan` (
 
 INSERT INTO `jabatan` (`id_jabatan`, `nama`, `sks_wajib`) VALUES
 ('1', 'Merzae', '24'),
-('5', 'AJi', '48');
+('5', 'AJi', '48'),
+('5f9d0ca148afb', 'Malehza', '122');
 
 -- --------------------------------------------------------
 
@@ -201,7 +202,8 @@ CREATE TABLE `jabatan_pegawai` (
 
 INSERT INTO `jabatan_pegawai` (`id_jabatan_pegawai`, `nip_pegawai`) VALUES
 ('1', '3434'),
-('5', 'JP0928');
+('5', 'JP0928'),
+('5f9d0ca148afb', '268');
 
 -- --------------------------------------------------------
 
@@ -240,7 +242,8 @@ CREATE TABLE `jenjang` (
 
 INSERT INTO `jenjang` (`id_jenjang`, `nominal`) VALUES
 ('1', 'S1'),
-('5', 'D3');
+('5', 'D3'),
+('5f9d0ca148afb', '100000');
 
 -- --------------------------------------------------------
 
@@ -276,16 +279,18 @@ CREATE TABLE `kepegawaian` (
   `id_jabatan` varchar(20) NOT NULL,
   `id_masa_kerja` varchar(20) NOT NULL,
   `id_jenjang` varchar(20) NOT NULL,
-  `id_setting_gaji` varchar(20) NOT NULL
+  `id_setting_gaji` varchar(20) NOT NULL,
+  `gender` enum('laki-laki','perempuan') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `kepegawaian`
 --
 
-INSERT INTO `kepegawaian` (`id_kepegawaian`, `id_jabatan_pegawai`, `id_jabatan`, `id_masa_kerja`, `id_jenjang`, `id_setting_gaji`) VALUES
-(1, '1', '1', '1', '1', '1'),
-(6, '5', '5', '5', '5', '5');
+INSERT INTO `kepegawaian` (`id_kepegawaian`, `id_jabatan_pegawai`, `id_jabatan`, `id_masa_kerja`, `id_jenjang`, `id_setting_gaji`, `gender`) VALUES
+(1, '1', '1', '1', '1', '1', 'perempuan'),
+(6, '5', '5', '5', '5', '5', 'laki-laki'),
+(8, '5f9d0ca148afb', '5f9d0ca148afb', '5f9d0ca148afb', '5f9d0ca148afb', '5f9d0ca148afb', 'laki-laki');
 
 -- --------------------------------------------------------
 
@@ -327,7 +332,8 @@ CREATE TABLE `masa_kerja` (
 
 INSERT INTO `masa_kerja` (`id_masa_kerja`, `masa_kerja`) VALUES
 ('1', '20'),
-('5', '2');
+('5', '2'),
+('5f9d0ca148afb', '2');
 
 -- --------------------------------------------------------
 
@@ -378,7 +384,8 @@ CREATE TABLE `setting_gaji` (
 
 INSERT INTO `setting_gaji` (`id_setting_gaji`, `gapok`, `tunjangan`, `transport`) VALUES
 ('1', '1000000', '1000000', '2000000'),
-('5', '1000', '1000', '1000');
+('5', '1000', '1000', '1000'),
+('5f9d0ca148afb', '200000', '2333', '12333');
 
 -- --------------------------------------------------------
 
@@ -588,7 +595,7 @@ ALTER TABLE `kepanitiaan`
 -- AUTO_INCREMENT untuk tabel `kepegawaian`
 --
 ALTER TABLE `kepegawaian`
-  MODIFY `id_kepegawaian` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_kepegawaian` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT untuk tabel `login`
